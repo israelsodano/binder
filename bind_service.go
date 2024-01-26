@@ -213,7 +213,12 @@ func bindarray(s []byte, ctx []byte) []byte {
 	}
 	_, err = jsonparser.GetString(temp, "it")
 	if err != nil {
-		return s
+		sarr := []string{}
+		jsonparser.ArrayEach(s, func(value []byte, _ jsonparser.ValueType, i int, _ error) {
+			value = visitarrays(value, ctx)
+			sarr = append(sarr, string(value))
+		})
+		return []byte(fmt.Sprintf("[%s]", strings.Join(sarr, ",")))
 	}
 	return BindTemplateArray(temp, ctx)
 }

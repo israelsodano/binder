@@ -18,5 +18,5 @@ func Benchmark_Bind(t *testing.B) {
 		panic(err)
 	}
 	v := binder.Bind(s, d)
-	os.WriteFile("out.json", v, 0644)
+	os.WriteFile("out.json", v, 0777)
 }
