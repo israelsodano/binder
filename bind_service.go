@@ -214,7 +214,7 @@ func bindarray(s []byte, ctx []byte) []byte {
 	_, err = jsonparser.GetString(temp, "it")
 	if err != nil {
 		sarr := []string{}
-		jsonparser.ArrayEach(s, func(value []byte, _ jsonparser.ValueType, i int, _ error) {
+		jsonparser.ArrayEach(s, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
 			value = visitarrays(value, ctx)
 			sarr = append(sarr, string(value))
 		})
