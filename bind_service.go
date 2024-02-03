@@ -182,6 +182,7 @@ func BindTemplateArray(temp []byte, ctx []byte) []byte {
 	if err != nil || i == "" {
 		return []byte(fmt.Sprintf("[%v]", string(temp)))
 	}
+	seed, _ := jsonparser.GetInt(temp, "seed")
 	arr, dt, _, _ := jsonparser.Get(ctx, getkeys(it)...)
 	if dt != jsonparser.Array {
 		bit := Bind([]byte(it), ctx)
@@ -199,7 +200,7 @@ func BindTemplateArray(temp []byte, ctx []byte) []byte {
 	sarr := []string{}
 	jsonparser.ArrayEach(arr, func(_ []byte, _ jsonparser.ValueType, _ int, _ error) {
 		stridx := fmt.Sprintf("[%v]", idx)
-		nmridx := fmt.Sprintf("%v", idx)
+		nmridx := fmt.Sprintf("%v", idx+int(seed))
 
 		bstrtemp := strings.ReplaceAll(strtmp, i, stridx)
 		bstrtemp = strings.ReplaceAll(bstrtemp, ii, nmridx)
