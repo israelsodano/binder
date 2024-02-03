@@ -194,11 +194,16 @@ func BindTemplateArray(temp []byte, ctx []byte) []byte {
 	temp = jsonparser.Delete(temp, "it")
 	temp = jsonparser.Delete(temp, "i")
 	strtmp := string(temp)
+	ii := "\"" + i + "\""
 	i = "[" + i + "]"
 	sarr := []string{}
 	jsonparser.ArrayEach(arr, func(_ []byte, _ jsonparser.ValueType, _ int, _ error) {
 		stridx := fmt.Sprintf("[%v]", idx)
+		nmridx := fmt.Sprintf("%v", idx)
+
 		bstrtemp := strings.ReplaceAll(strtmp, i, stridx)
+		bstrtemp = strings.ReplaceAll(bstrtemp, ii, nmridx)
+
 		btemp := visitarrays([]byte(bstrtemp), ctx)
 		sarr = append(sarr, string(btemp))
 		idx++
